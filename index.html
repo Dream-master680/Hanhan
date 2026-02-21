@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>晗晗的 Python 小课堂 💕</title>
+  <link rel="stylesheet" href="/Hanhan/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- 登录页：未登录时显示 -->
+  <div class="login-page" id="loginPage">
+    <div class="login-bg"></div>
+    <div class="login-card">
+      <p class="login-mascots" aria-hidden="true"><span title="俊杰">🐕</span> · <span title="晗晗">🐷</span></p>
+      <h1 class="login-title">晗晗的 Python 小课堂</h1>
+      <p class="login-desc">俊杰写给你的代码情书 · 登录后开始学习</p>
+      <form class="login-form" id="loginForm">
+        <label class="login-label" for="loginUser">账号</label>
+        <input type="text" id="loginUser" class="login-input" placeholder="请输入账号" autocomplete="username" required />
+        <label class="login-label" for="loginPass">密码</label>
+        <input type="password" id="loginPass" class="login-input" placeholder="请输入密码" autocomplete="current-password" required />
+        <p class="login-error" id="loginError" aria-live="polite"></p>
+        <button type="submit" class="login-btn" id="loginBtn">进入课堂</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 主内容：登录成功后显示 -->
+  <div class="app-wrap hidden" id="appContent">
+    <div class="bg-hearts" aria-hidden="true">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="mascot mascot-pig" title="晗晗">🐷</span>
+      <span class="mascot mascot-husky" title="俊杰">🐕</span>
+    </div>
+
+    <header class="header">
+      <div class="header-inner">
+        <h1 class="title">晗晗的 Python 小课堂</h1>
+        <p class="subtitle">写给你的代码情书 · 一步一步，陪你学会编程</p>
+        <div class="header-actions">
+          <div class="progress-wrap">
+            <span class="progress-icon" aria-hidden="true">📚</span>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span class="progress-text" id="progressText">已完成 0%</span>
+          </div>
+          <button type="button" class="btn-reset-all" id="btnResetAll" title="清空进度、笔记、留言">全部重置</button>
+          <button type="button" class="btn-logout" id="btnLogout" title="退出登录">退出</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <aside class="sidebar">
+        <div class="nav-search-wrap">
+          <input type="text" class="nav-search" id="navSearch" placeholder="搜索课程…" aria-label="搜索课程" />
+        </div>
+        <nav class="nav" id="courseNav"></nav>
+        <button type="button" class="btn-message" id="btnMessage">💌 给俊杰留言</button>
+      </aside>
+
+      <article class="content">
+        <section class="welcome" id="welcome">
+          <p class="welcome-mascots"><span class="mascot-welcome husky" aria-hidden="true" title="俊杰">🐕</span> 俊杰 · 晗晗 <span class="mascot-welcome pig" aria-hidden="true" title="晗晗">🐷</span></p>
+          <h2>欢迎呀，晗晗 💖</h2>
+          <p>这里是你专属的 Python 学习小站。不用安装任何软件，在网页里就能写代码、看结果。每学完一小节，点「试试运行」并运行成功，就会自动打勾记录进度～</p>
+          <div class="welcome-roadmap">
+            <h3>学习路线图</h3>
+            <ol>
+              <li><strong>阶段一：从零开始</strong> — print、变量、数字、注释与报错</li>
+              <li><strong>阶段二：文字与列表</strong> — 字符串、切片、列表及方法，中间有小结</li>
+              <li><strong>阶段三：判断与循环</strong> — if、for、while，中间有小结</li>
+              <li><strong>阶段四：函数与结构</strong> — 函数、字典、input、异常处理</li>
+              <li><strong>阶段五：进阶与项目</strong> — 元组、集合、推导式、模块、类、文件、综合与小项目</li>
+            </ol>
+            <p class="roadmap-tip">左侧导航按这五个阶段分组，学完一节再进下一节，就不会乱啦～</p>
+          </div>
+          <p class="love-note">「俊杰想和你一起，从第一行 print 开始，走到更远的地方。」</p>
+        </section>
+        <div id="lessons"></div>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <p><span class="footer-mascot husky" aria-hidden="true" title="俊杰">🐕</span> 俊杰送给晗晗 <span class="footer-mascot pig" aria-hidden="true" title="晗晗">🐷</span><br /><small>用心做的学习小站</small></p>
+    </footer>
+
+    <button type="button" class="back-top" id="backTop" aria-label="返回顶部">↑</button>
+
+    <!-- 运行代码的弹窗 -->
+    <div class="modal" id="runModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>试试运行这段代码</h3>
+          <button class="btn-close" id="closeModal" aria-label="关闭">×</button>
+        </div>
+        <textarea class="code-editor" id="codeEditor" spellcheck="false"></textarea>
+        <div class="modal-actions">
+          <button class="btn btn-run" id="runCode">运行</button>
+          <button class="btn btn-secondary" id="resetCode">恢复原样</button>
+        </div>
+        <div class="output-box">
+          <span class="output-label">输出：</span>
+          <pre class="output-content" id="outputContent"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 提示 / 参考答案 弹窗 -->
+    <div class="modal" id="hintModal">
+      <div class="modal-content modal-help">
+        <div class="modal-header">
+          <h3 id="hintModalTitle">💡 提示</h3>
+          <button class="btn-close" id="closeHintModal" aria-label="关闭">×</button>
+        </div>
+        <div class="modal-body">
+          <pre class="hint-modal-body" id="hintModalBody"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 运行成功：爱意与鼓励 -->
+    <div class="modal" id="encourageModal">
+      <div class="modal-content modal-encourage">
+        <p class="encourage-text" id="encourageText"></p>
+        <button type="button" class="btn-encourage-ok" id="closeEncourageModal">知道啦 💕</button>
+      </div>
+    </div>
+
+    <!-- 给俊杰留言 弹窗 -->
+    <div class="modal" id="messageModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>💌 给俊杰留言</h3>
+          <button class="btn-close" id="closeMessageModal" aria-label="关闭">×</button>
+        </div>
+        <p class="message-desc">不会的题目、卡住的地方、想说的话都可以写在这里～ 也可以发给俊杰，俊杰会看到~</p>
+        <textarea class="message-editor" id="messageToJunjie" placeholder="例如：第 3 课的列表下标我还是有点晕…"></textarea>
+        <div class="modal-actions">
+          <button class="btn btn-run" id="saveMessage">保存留言</button>
+        </div>
+        <p class="message-saved" id="messageSaved"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
